@@ -4,6 +4,8 @@ import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { env } from "./config/env";
+import { notFound } from "./middleware/notFound";
+import { globalErrorHandler } from "./middleware/errorHandler";
 
 const app = express();
 
@@ -19,5 +21,8 @@ if (env.NODE_ENV === "development") {
 app.route("/").get((req, res) => {
 	res.json({ message: "Welcome to API 🚀" });
 });
+
+app.use(notFound);
+app.use(globalErrorHandler);
 
 export default app;
