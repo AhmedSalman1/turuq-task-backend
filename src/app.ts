@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { env } from "./config/env";
 import { notFound } from "./middleware/notFound";
 import { globalErrorHandler } from "./middleware/errorHandler";
+import { apiLimiter, authLimiter } from "./middleware/rateLimiter";
 
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
@@ -24,6 +25,9 @@ if (env.NODE_ENV === "development") {
 app.route("/health").get((req, res) => {
 	res.json({ message: "API is running ✅" });
 });
+
+app.use("/api/v1/auth", authLimiter);
+app.use("/api", apiLimiter);
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
