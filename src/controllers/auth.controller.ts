@@ -63,6 +63,19 @@ export const login: RequestHandler = async (req, res) => {
 	});
 };
 
+export const getMe: RequestHandler = async (req, res) => {
+	const user = await User.findById(req.user.id);
+
+	if (!user) {
+		throw new AppError("User not found", 404);
+	}
+
+	res.status(200).json({
+		status: "success",
+		data: { user: sanitizeUser(user) },
+	});
+};
+
 export const logout: RequestHandler = (req, res) => {
 	res.clearCookie("jwt", {
 		httpOnly: true,

@@ -33,6 +33,14 @@ const userSchema = new Schema<IUser>(
 				message: "Please enter a valid age",
 			},
 		},
+		role: {
+			type: String,
+			enum: {
+				values: ["admin", "user"],
+				message: "Role must be either 'admin' or 'user'",
+			},
+			default: "user",
+		},
 	},
 	{ timestamps: true },
 );

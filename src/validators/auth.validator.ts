@@ -13,6 +13,8 @@ export const registerSchema = {
 		password: z.string().min(8, "Password must be at least 8 characters"),
 
 		age: z.number().int("Age must be an integer").min(1).max(100).optional(),
+
+		role: z.enum(["admin", "user"]).optional(),
 	}),
 };
 
