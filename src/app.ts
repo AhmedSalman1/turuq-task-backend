@@ -7,6 +7,8 @@ import { env } from "./config/env";
 import { notFound } from "./middleware/notFound";
 import { globalErrorHandler } from "./middleware/errorHandler";
 
+import authRoutes from "./routes/auth.routes";
+
 const app = express();
 
 app.use(helmet());
@@ -21,6 +23,8 @@ if (env.NODE_ENV === "development") {
 app.route("/").get((req, res) => {
 	res.json({ message: "Welcome to API 🚀" });
 });
+
+app.use("/api/v1/auth", authRoutes);
 
 app.use(notFound);
 app.use(globalErrorHandler);
