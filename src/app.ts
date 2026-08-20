@@ -8,6 +8,7 @@ import { notFound } from "./middleware/notFound";
 import { globalErrorHandler } from "./middleware/errorHandler";
 
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 
 const app = express();
 
@@ -20,11 +21,12 @@ if (env.NODE_ENV === "development") {
 	app.use(morgan("dev"));
 }
 
-app.route("/").get((req, res) => {
-	res.json({ message: "Welcome to API 🚀" });
+app.route("/health").get((req, res) => {
+	res.json({ message: "API is running ✅" });
 });
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 
 app.use(notFound);
 app.use(globalErrorHandler);
