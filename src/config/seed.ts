@@ -2,15 +2,13 @@ import mongoose from "mongoose";
 import { User } from "../models/user.model";
 import { connectDB } from "./db";
 import { env } from "./env";
-import dns from "node:dns";
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const users = Array.from({ length: 50 }, (_, i) => ({
 	name: `User ${i + 1}`,
 	email: `user${i + 1}@example.com`,
 	password: "password123",
 	age: (i % 60) + 18,
-	role: i === 0 ? "admin" : "user",
+		role: i === 0 ? ("admin" as const) : ("user" as const),
 }));
 
 const seed = async () => {
@@ -18,7 +16,7 @@ const seed = async () => {
 		await connectDB();
 
 		await User.deleteMany({});
-		await User.create(users);
+		await User.create(...users);
 
 		console.log(`Seeded ${users.length} users ✅`);
 	} catch (error) {

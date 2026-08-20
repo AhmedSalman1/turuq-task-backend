@@ -2,8 +2,6 @@ import http from "http";
 import app from "./app";
 import { connectDB } from "./config/db";
 import { env } from "./config/env";
-import dns from "node:dns";
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const PORT = env.PORT || 3000;
 const server = http.createServer(app);
