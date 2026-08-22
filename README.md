@@ -174,3 +174,17 @@ tests/                   # Jest + supertest integration tests (mongodb-memory-se
 
 Root config: render.yaml, .env.example, jest.config.js, tsconfig.json, .eslintrc.json, .prettierrc
 ```
+
+## Task 2: Handling Delivery Slots (Design & Logic)
+
+The solution for Task 2 focuses on dynamic delivery slot allocation, race condition prevention (overbooking), idempotency, and suggesting alternatives.
+
+### System Architecture & Workflow Diagram
+
+![Delivery Slots System Flow](./delivery_slots_system_flow.png)
+
+> **Key Highlights:**
+> - **Atomic Operations:** Uses conditional updates (`bookedCount < capacity`) to eliminate race conditions without complex locking.
+> - **Idempotency:** Protects against duplicated submissions on retries using `idempotencyKey`.
+> - **Smart Alternatives:** Auto-suggests the closest available slots on the same day if the preferred slot is full.
+> - **Capacity Release:** Safe cancellation logic guarded by `bookedCount > 0`.
